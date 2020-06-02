@@ -1,0 +1,100 @@
+<!-- Example, using Fancybox, or lightgallery as gallery -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>ImageHeight Example</title>
+    <!-- Extras Start -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/lightgallery@1.7.0/dist/css/lightgallery.css">
+    <!-- Extras End -->
+</head>
+
+<body>
+    <div class="container">
+        <h1>Image Height Example</h1>
+        <hr class="my-4">
+    </div>
+    <div class="myclasscontainer container" id="lightgallery">
+        <a href="https://picsum.photos/id/999/200/300">
+            <img src="https://picsum.photos/id/999/200/300" alt="example 1" />
+        </a>
+    </div>
+    <br>
+    <div class="container my-4">
+        <hr class="my-4">
+        <h3>External Libraries</h3>
+        <ul>
+            <li>
+                <a href="https://fancyapps.com/fancybox/3/">Fancybox - Gallery slideshow</a>
+            </li>
+            <li>
+                <a href="https://getbootstrap.com/">Bootstrap 4</a>
+            </li>
+            <li>
+                <a href="https://picsum.photos/">Lorem Picsum - Example images</a>
+            </li>
+        </ul>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="ImageHeight.min.js"></script>
+
+    <!--Extras Start-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/combine/npm/lightgallery,npm/lg-autoplay,npm/lg-fullscreen,npm/lg-hash,npm/lg-pager,npm/lg-share,npm/lg-thumbnail,npm/lg-video,npm/lg-zoom"></script>
+    
+
+    <script>
+        var gallery = "lightgallery";//options: "lightgallery","fancybox"
+        var imagesrul="picsum";//options: "picsum","placeholder"
+    </script>
+    <script>
+        //Add Example images to container
+        var exampleimages = 10; // try with 1000 ! 
+        for (i = 0; i < exampleimages; i++) {
+            var width = parseInt(Math.random() * 10 + 3)*100;
+            var height = parseInt(Math.random() * 10 + 3)*100;
+            if (imagesrul=="picsum"){
+                var url=`https://picsum.photos/${width}/${height}`;
+            }else if(imagesrul=="placeholder"){
+                var url=`https://via.placeholder.com/${width}x${height}?text=Image+${i}`;
+            }
+
+            var tpl = `<a href="${url}" > <img src="${url}" alt="example ${i}" /> </a>`;
+            var img = $(tpl);
+            $('.myclasscontainer').append(img);
+        }
+        //Add Example images to container
+    </script>
+    <script>
+        if (gallery == "lightgallery") {
+            $('#lightgallery').lightGallery();
+        } else if (gallery == "fancybox") {
+            $("#lightgallery a").on('click', function() {
+                $.fancybox.open($("#lightgallery a"));
+                return false;
+            });
+        }
+    </script>
+
+
+
+    <!--Extras End-->
+
+    <script>
+        $('.myclasscontainer').ImageHeight({
+            minwidth: 300,
+            minheight: 100,
+            maxrow: 5,
+            margin: 10,
+            placeholder:true, // True If you want to see placeholders for images to be loaded, or False to wait until a line is completely loaded to show it
+            showerrors: false // If you want to see broken images And console logs (images visibility overrided by placeholder)
+        });
+    </script>
+</body>
+
+</html>
