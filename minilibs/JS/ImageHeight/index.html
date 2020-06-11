@@ -14,14 +14,72 @@
 
 <body>
     <div class="container">
-        <h1>Image Height Example</h1>
-        <h4>Get the code in our <a href="https://github.com/pskyvader/minilibs/tree/master/JS/ImageHeight">Github Repository</a></h4>
+        <h1>Image Height Example
+            <p class="d-inline h4">Get the code in our
+                <a href="https://github.com/pskyvader/minilibs/tree/master/JS/ImageHeight">Github Repository</a>
+            </p>
+        </h1>
+    </div>
+    <div class="container">
+        <a class="btn btn-primary  btn-sm" data-toggle="collapse" href="#options" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Toggle Options
+        </a>
+        <div class="collapse" id="options">
+            <hr class="my-4">
+            <h5>Options</h5>
+            <form action="" method="get">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="gallery">Gallery</label>
+                        <select name="" class="form-control" id="gallery">
+                            <option value="lightgallery">lightgallery</option>
+                            <option value="fancybox">fancybox</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">Password</label>
+                        <input type="password" class="form-control" id="inputPassword4">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress">Address</label>
+                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress2">Address 2</label>
+                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputCity">City</label>
+                        <input type="text" class="form-control" id="inputCity">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">State</label>
+                        <select id="inputState" class="form-control">
+                            <option selected>Choose...</option>
+                            <option>...</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputZip">Zip</label>
+                        <input type="text" class="form-control" id="inputZip">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck">
+                        <label class="form-check-label" for="gridCheck">
+                            Check me out
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign in</button>
+            </form>
+        </div>
         <hr class="my-4">
     </div>
     <div class="myclasscontainer container" id="lightgallery">
-        <a href="https://picsum.photos/id/999/200/300">
-            <img src="https://picsum.photos/id/999/200/300" alt="example 1" />
-        </a>
     </div>
     <br>
     <div class="container my-4">
@@ -47,21 +105,30 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/combine/npm/lightgallery,npm/lg-autoplay,npm/lg-fullscreen,npm/lg-hash,npm/lg-pager,npm/lg-share,npm/lg-thumbnail,npm/lg-video,npm/lg-zoom"></script>
     <script>
-        var gallery = "lightgallery"; //options: "lightgallery","fancybox"
-        var imagesrul = "picsum"; //options: "picsum","placeholder"
+        var defaults = {
+            gallery: "lightgallery", //options: "lightgallery","fancybox"
+            imagesrul: "picsum", //options: "picsum","placeholder"
+            exampleimages: 10, // try with 1000 !
+        };
+        var defaults_imageheight = {
+            minwidth: 300,
+            minheight: 100,
+            maxrow: 5,
+            margin: 10,
+            placeholder: true, // True If you want to see placeholders for images to be loaded, or False to wait until a line is completely loaded to show it
+            showerrors: false // If you want to see broken images And console logs (images visibility overrided by placeholder)
+        };
     </script>
     <script>
         //Add Example images to container
-        var exampleimages = 100; // try with 1000 ! 
-        for (i = 0; i < exampleimages; i++) {
+        for (i = 0; i < defaults.exampleimages; i++) {
             var width = parseInt(Math.random() * 10 + 3) * 100;
             var height = parseInt(Math.random() * 10 + 3) * 100;
-            if (imagesrul == "picsum") {
+            if (defaults.imagesrul == "picsum") {
                 var url = `https://picsum.photos/${width}/${height}`;
-            } else if (imagesrul == "placeholder") {
+            } else if (defaults.imagesrul == "placeholder") {
                 var url = `https://via.placeholder.com/${width}x${height}?text=Image+${i}`;
             }
-
             var tpl = `<a href="${url}" > <img src="${url}" alt="example ${i}" /> </a>`;
             var img = $(tpl);
             $('.myclasscontainer').append(img);
@@ -69,9 +136,9 @@
         //Add Example images to container
     </script>
     <script>
-        if (gallery == "lightgallery") {
+        if (defaults.gallery == "lightgallery") {
             $('#lightgallery').lightGallery();
-        } else if (gallery == "fancybox") {
+        } else if (defaults.gallery == "fancybox") {
             $("#lightgallery a").on('click', function() {
                 $.fancybox.open($("#lightgallery a"));
                 return false;
@@ -80,14 +147,7 @@
     </script>
     <!--Extras End-->
     <script>
-        $('.myclasscontainer').ImageHeight({
-            minwidth: 300,
-            minheight: 100,
-            maxrow: 5,
-            margin: 10,
-            placeholder: true, // True If you want to see placeholders for images to be loaded, or False to wait until a line is completely loaded to show it
-            showerrors: false // If you want to see broken images And console logs (images visibility overrided by placeholder)
-        });
+        $('.myclasscontainer').ImageHeight(defaults_imageheight);
     </script>
 </body>
 
